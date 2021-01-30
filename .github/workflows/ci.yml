@@ -41,7 +41,7 @@ jobs:
       - name: Upload Artifact APK
         uses: actions/upload-artifact@v2
         with:
-          name: RnFootball-apk
+          name: Signed App APK
           path: ${{steps.sign_app_apk.outputs.signedReleaseFile}}
 
       - name: Build Android App Bundle
