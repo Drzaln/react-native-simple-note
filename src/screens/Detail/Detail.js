@@ -1,0 +1,76 @@
+import React from 'react'
+import { View, Text, StatusBar, Pressable, StyleSheet } from 'react-native'
+import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions'
+import { SharedElement } from 'react-navigation-shared-element'
+import Left from '../../assets/icons/Left'
+import Plus from '../../assets/icons/Plus'
+
+const Detail = ({ navigation }) => {
+	const { width, height } = useWindowDimensions()
+	return (
+		<React.Fragment>
+			<StatusBar backgroundColor='#FFDA77' barStyle='dark-content' animated />
+			<View style={{ flex: 1, backgroundColor: '#FFDA77' }}>
+				{/* <SharedElement id={`item.view.note`} style={StyleSheet.absoluteFillObject} >
+					<View
+						style={{
+							...StyleSheet.absoluteFillObject,
+							backgroundColor: '#FFDA77'
+						}}
+					/>
+				</SharedElement> */}
+				<Pressable
+					style={{ margin: 24 }}
+					hitSlop={{ left: 16, right: 16, top: 16, bottom: 16 }}
+					onPress={() => navigation.goBack()}>
+					<Left />
+				</Pressable>
+				<View style={{ alignItems: 'flex-start', marginHorizontal: 24 }}>
+					<SharedElement id={`item.title.note`}>
+						<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 34 }}>Title</Text>
+					</SharedElement>
+				</View>
+				<View style={{ alignItems: 'flex-start', justifyContent: 'flex-start', marginHorizontal: 24 }}>
+					{/* <SharedElement id={`item.content.note`}> */}
+					<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }}>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+						laboris nisi ut aliquip ex. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+						officia deserunt mollit anim id est laborum.
+					</Text>
+					{/* </SharedElement> */}
+				</View>
+			</View>
+			<FAB />
+		</React.Fragment>
+	)
+}
+
+Detail.sharedElements = () => {
+	return [ `item.title.note`, `item.content.note`, `item.view.note`, `item.fab` ]
+}
+
+export default Detail
+
+const FAB = () => {
+	return (
+		<SharedElement id={`item.fab`}>
+			<View
+				style={{
+					width: 120,
+					height: 54,
+					backgroundColor: '#FFA45B',
+					borderRadius: 18,
+					alignItems: 'center',
+					justifyContent: 'center',
+					position: 'absolute',
+					bottom: 50,
+					right: 30
+				}}>
+				<View style={{ alignItems: 'flex-start' }}>
+					<Text style={{ fontFamily: 'Poppins-Medium', color: '#F9F9F9', fontSize: 18 }}>Edit</Text>
+				</View>
+			</View>
+		</SharedElement>
+	)
+}
