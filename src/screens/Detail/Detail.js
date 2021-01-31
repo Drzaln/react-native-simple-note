@@ -25,11 +25,16 @@ const Detail = ({ navigation }) => {
 				/>
 			</SharedElement>
 			<Pressable
-				style={{ margin: 24 }}
+				style={{
+					marginHorizontal: 24,
+					marginVertical: 16
+				}}
 				hitSlop={{ left: 16, right: 16, top: 16, bottom: 16 }}
 				onPress={() => navigation.goBack()}>
 				<Animatable.View ref={leftRef} animation='fadeIn' duration={DURATION} delay={DELAY}>
-					<Left />
+					<SharedElement id={`item.left.note`}>
+						<Left />
+					</SharedElement>
 				</Animatable.View>
 			</Pressable>
 			<View style={{ alignItems: 'flex-start', marginHorizontal: 24 }}>
@@ -53,10 +58,6 @@ const Detail = ({ navigation }) => {
 			<FAB navigation={navigation} />
 		</React.Fragment>
 	)
-}
-
-Detail.sharedElements = () => {
-	return [ { id: `item.view.note` }, { id: `item.fab` }, { id: `item.content.note` }, { id: `item.title.note` } ]
 }
 
 export default Detail
