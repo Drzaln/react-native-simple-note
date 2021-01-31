@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import React from 'react'
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import Detail from './src/screens/Detail/Detail'
+import Edit from './src/screens/Edit/Edit'
 import Home from './src/screens/Home/Home'
 
 const App = () => {
@@ -24,8 +25,8 @@ const MyStack = () => {
 				// },
 				gestureEnabled: false,
 				transitionSpec: {
-					open: { animation: 'timing', config: { duration: 250 } },
-					close: { animation: 'timing', config: { duration: 250 } }
+					open: { animation: 'timing', config: { duration: 500 } },
+					close: { animation: 'timing', config: { duration: 500 } }
 				},
 				cardStyleInterpolator: ({ current: { progress } }) => {
 					return {
@@ -36,9 +37,11 @@ const MyStack = () => {
 				},
 				cardStyle: { backgroundColor: '#F9F9F9' }
 			}}
-			headerMode='none'>
+			headerMode='none'
+			initialRouteName='Home'>
 			<Stack.Screen name='Home' component={Home} />
 			<Stack.Screen name='Detail' component={Detail} />
+			<Stack.Screen name='Edit' component={Edit} />
 		</Stack.Navigator>
 	)
 }

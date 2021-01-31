@@ -37,45 +37,34 @@ const NoteItem = ({ onPress }) => {
 				style={{
 					marginHorizontal: 24,
 					marginVertical: 8,
-					elevation: 1,
 					borderRadius: 18,
 					padding: 12,
 					justifyContent: 'center',
-					overflow: 'hidden',
-					backgroundColor: '#FFDA77'
+					height: 90
 				}}>
-				{/* <SharedElement
-					id={`item.view.note`}
-					style={{
-						...StyleSheet.absoluteFillObject,
-						borderRadius: 18,
-						backgroundColor: '#FFDA77',
-						zIndex: -2
-					}}>
+				<SharedElement id={`item.view.note`} style={StyleSheet.absoluteFillObject}>
 					<View
 						style={{
 							...StyleSheet.absoluteFillObject,
 							borderRadius: 18,
 							backgroundColor: '#FFDA77',
-							zIndex: -2
+							elevation: 1
 						}}
 					/>
-				</SharedElement> */}
+				</SharedElement>
 				<View style={{ alignItems: 'flex-start' }}>
 					<SharedElement id={`item.title.note`}>
 						<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 18 }}>Title</Text>
 					</SharedElement>
 				</View>
-				{/* <View style={{ alignItems: 'flex-start',justifyContent: 'flex-start' }}>
-					<SharedElement id={`item.content.note`}> */}
-				<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }} numberOfLines={2}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-					aliquip ex. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-					mollit anim id est laborum.
-				</Text>
-				{/* </SharedElement>
-				</View> */}
+				<View style={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+					<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }} numberOfLines={2}>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+						laboris nisi ut aliquip ex. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+						officia deserunt mollit anim id est laborum.
+					</Text>
+				</View>
 			</View>
 		</Pressable>
 	)
@@ -83,21 +72,27 @@ const NoteItem = ({ onPress }) => {
 
 const FAB = () => {
 	return (
-		<SharedElement id={`item.fab`}>
-			<View
-				style={{
-					width: 54,
-					height: 54,
-					backgroundColor: '#FFA45B',
-					borderRadius: 54 / 2,
-					alignItems: 'center',
-					justifyContent: 'center',
-					position: 'absolute',
-					bottom: 50,
-					right: 30
-				}}>
-				<Plus />
-			</View>
-		</SharedElement>
+		<View
+			style={{
+				width: 54,
+				height: 54,
+				borderRadius: 54 / 2,
+				alignItems: 'center',
+				justifyContent: 'center',
+				position: 'absolute',
+				bottom: 50,
+				right: 30
+			}}>
+				<View
+					style={[
+						StyleSheet.absoluteFillObject,
+						{
+							backgroundColor: '#FFA45B',
+							borderRadius: 54 / 2
+						}
+					]}
+				/>
+			<Plus />
+		</View>
 	)
 }
