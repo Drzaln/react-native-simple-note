@@ -25,7 +25,9 @@ export default Home
 const Header = () => {
 	return (
 		<View style={{ marginHorizontal: 24, marginTop: 16 }}>
-			<Text style={{ fontFamily: 'Poppins-SemiBold', color: '#0F1123', fontSize: 36 }}>Notes</Text>
+			<Text style={{ fontFamily: 'Poppins-SemiBold', color: '#0F1123', fontSize: 36, includeFontPadding: false }}>
+				Notes
+			</Text>
 		</View>
 	)
 }
@@ -83,15 +85,15 @@ const FAB = () => {
 				bottom: 50,
 				right: 30
 			}}>
-				<View
-					style={[
-						StyleSheet.absoluteFillObject,
-						{
-							backgroundColor: '#FFA45B',
-							borderRadius: 54 / 2
-						}
-					]}
-				/>
+			<View
+				style={[
+					StyleSheet.absoluteFillObject,
+					{
+						backgroundColor: '#FFA45B',
+						borderRadius: 54 / 2
+					}
+				]}
+			/>
 			<Plus />
 		</View>
 	)
