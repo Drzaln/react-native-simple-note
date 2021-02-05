@@ -43,7 +43,7 @@ const MyStack = () => {
 			<Stack.Screen
 				name='Detail'
 				component={Detail}
-				sharedElementsConfig={(route, otherRoute, showing) => {
+				sharedElements={(route, otherRoute, showing) => {
 					if (otherRoute.name === 'Edit' && showing) {
 						return [ `item.left.note`, `item.title.note` ]
 					} else {
@@ -59,7 +59,7 @@ const MyStack = () => {
 			<Stack.Screen
 				name='Edit'
 				component={Edit}
-				sharedElementsConfig={(route, otherRoute, showing) => {
+				sharedElements={(route, otherRoute, showing) => {
 					[ { id: `item.view.note` }, { id: `item.title.note` }, { id: `item.left.note` } ]
 				}}
 			/>

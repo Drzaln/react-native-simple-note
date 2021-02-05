@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Pressable, StatusBar } from 'react-native'
 import { SharedElement } from 'react-navigation-shared-element'
 import Left from '../../assets/icons/Left'
 import * as Animatable from 'react-native-animatable'
@@ -10,6 +10,7 @@ const DELAY = 600
 const Edit = ({ navigation }) => {
 	return (
 		<React.Fragment>
+			<StatusBar backgroundColor='#F9F9F9' barStyle='dark-content' animated />
 			<Pressable
 				style={{
 					marginHorizontal: 24,
@@ -49,7 +50,7 @@ const Edit = ({ navigation }) => {
 						]}
 					/>
 				</SharedElement>
-				<View style={{ alignItems: 'flex-start', marginHorizontal: 24 , marginVertical: 16}}>
+				<View style={{ alignItems: 'flex-start', marginHorizontal: 24, marginVertical: 16 }}>
 					<SharedElement id={`item.title.note`}>
 						<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 34 }}>Title</Text>
 					</SharedElement>
