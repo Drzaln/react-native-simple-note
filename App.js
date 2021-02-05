@@ -42,7 +42,12 @@ const MyStack = () => {
 				component={Detail}
 				sharedElements={(route, otherRoute, showing) => {
 					if (otherRoute.name === 'Edit' && showing) {
-						return [ { id: `item.title.note` }, { id: `item.content.note` }, { id: `item.left.note` } ]
+						return [
+							{ id: `item.title.note` },
+							{ id: `item.content.note` },
+							{ id: `item.left.note` },
+							{ id: `item.fab.note` }
+						]
 					} else {
 						return [ { id: `item.view.note` }, { id: `item.title.note` } ]
 					}
@@ -56,7 +61,8 @@ const MyStack = () => {
 						{ id: `item.view.note` },
 						{ id: `item.title.note` },
 						{ id: `item.content.note` },
-						{ id: `item.left.note` }
+						{ id: `item.left.note` },
+						{ id: `item.fab.note` }
 					]
 				}}
 			/>

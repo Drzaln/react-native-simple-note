@@ -3,9 +3,7 @@ import { View, Text, StyleSheet, Pressable, StatusBar } from 'react-native'
 import { SharedElement } from 'react-navigation-shared-element'
 import Left from '../../assets/icons/Left'
 import * as Animatable from 'react-native-animatable'
-
-const DURATION = 350
-const DELAY = 600
+import { DELAY, DURATION } from '../../constant/animationTime'
 
 const Edit = ({ navigation }) => {
 	return (
@@ -66,8 +64,50 @@ const Edit = ({ navigation }) => {
 					</SharedElement>
 				</View>
 			</View>
+			<FAB onPress={() => {}} />
 		</React.Fragment>
 	)
 }
 
 export default Edit
+
+const FAB = ({ onPress }) => {
+	return (
+		<View
+			style={{
+				width: 120,
+				height: 54,
+				alignItems: 'center',
+				justifyContent: 'center',
+				borderRadius: 54 / 2,
+				position: 'absolute',
+				bottom: 50,
+				right: 30
+			}}>
+			<Pressable
+				onPress={onPress}
+				style={{
+					width: 120,
+					height: 54,
+					alignItems: 'center',
+					justifyContent: 'center',
+					borderRadius: 54 / 2
+				}}>
+				<SharedElement id={`item.fab.note`} style={StyleSheet.absoluteFillObject}>
+					<View
+						style={[
+							StyleSheet.absoluteFillObject,
+							{
+								backgroundColor: '#FFA45B',
+								borderRadius: 54 / 2
+							}
+						]}
+					/>
+				</SharedElement>
+				<View style={{ alignItems: 'flex-start' }}>
+					<Text style={{ fontFamily: 'Poppins-Medium', color: '#F9F9F9', fontSize: 18 }}>Save</Text>
+				</View>
+			</Pressable>
+		</View>
+	)
+}

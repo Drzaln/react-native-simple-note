@@ -1,16 +1,32 @@
 import React from 'react'
-import { View, Text, StatusBar, Pressable, StyleSheet } from 'react-native'
+import { View, Text, StatusBar, Pressable, StyleSheet, BackHandler } from 'react-native'
 import { SharedElement } from 'react-navigation-shared-element'
 import Left from '../../assets/icons/Left'
 import * as Animatable from 'react-native-animatable'
-
-const DURATION = 350
-const DELAY = 600
+import { useFocusEffect } from '@react-navigation/native'
+import { DELAY, DURATION } from '../../constant/animationTime'
 
 const Detail = ({ navigation }) => {
 	const leftRef = React.useRef()
 	const contentRef = React.useRef()
 	const fabRef = React.useRef()
+
+	const backHandlePress = () => {
+		Promise.all([
+			leftRef.current.fadeOut(250),
+			contentRef.current.fadeOut(250),
+			fabRef.current.fadeOutRight(250)
+		]).then(() => navigation.goBack())
+		return true
+	}
+
+	useFocusEffect(
+		React.useCallback(() => {
+			BackHandler.addEventListener('hardwareBackPress', backHandlePress)
+
+			return () => BackHandler.removeEventListener('hardwareBackPress', backHandlePress)
+		}, [])
+	)
 
 	return (
 		<React.Fragment>
@@ -31,12 +47,7 @@ const Detail = ({ navigation }) => {
 					marginVertical: 16
 				}}
 				hitSlop={{ left: 16, right: 16, top: 16, bottom: 16 }}
-				onPress={() =>
-					Promise.all([
-						leftRef.current.fadeOut(250),
-						contentRef.current.fadeOut(250),
-						fabRef.current.fadeOutRight(250)
-					]).then(() => navigation.goBack())}>
+				onPress={() => backHandlePress()}>
 				<Animatable.View ref={leftRef} animation='fadeIn' duration={DURATION} delay={DELAY}>
 					<SharedElement id={`item.left.note`}>
 						<Left />
@@ -63,14 +74,14 @@ const Detail = ({ navigation }) => {
 					</Text>
 				</SharedElement>
 			</Animatable.View>
-			<FAB ref={fabRef} navigation={navigation} />
+			<FAB ref={fabRef} navigation={navigation} onPress={() => navigation.navigate('Edit')} />
 		</React.Fragment>
 	)
 }
 
 export default Detail
 
-const FAB = React.forwardRef(({ navigation }, ref) => {
+const FAB = React.forwardRef(({ onPress }, ref) => {
 	return (
 		<Animatable.View
 			ref={ref}
@@ -88,7 +99,7 @@ const FAB = React.forwardRef(({ navigation }, ref) => {
 				right: 30
 			}}>
 			<Pressable
-				onPress={() => navigation.navigate('Edit')}
+				onPress={onPress}
 				style={{
 					width: 120,
 					height: 54,
@@ -96,15 +107,17 @@ const FAB = React.forwardRef(({ navigation }, ref) => {
 					justifyContent: 'center',
 					borderRadius: 54 / 2
 				}}>
-				<View
-					style={[
-						StyleSheet.absoluteFillObject,
-						{
-							backgroundColor: '#FFA45B',
-							borderRadius: 54 / 2
-						}
-					]}
-				/>
+				<SharedElement id={`item.fab.note`} style={StyleSheet.absoluteFillObject}>
+					<View
+						style={[
+							StyleSheet.absoluteFillObject,
+							{
+								backgroundColor: '#FFA45B',
+								borderRadius: 54 / 2
+							}
+						]}
+					/>
+				</SharedElement>
 				<View style={{ alignItems: 'flex-start' }}>
 					<Text style={{ fontFamily: 'Poppins-Medium', color: '#F9F9F9', fontSize: 18 }}>Edit</Text>
 				</View>
