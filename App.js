@@ -20,13 +20,10 @@ const MyStack = () => {
 	return (
 		<Stack.Navigator
 			screenOptions={{
-				// header: (props) => {
-				// 	return <Header {...props} />
-				// },
 				gestureEnabled: false,
 				transitionSpec: {
-					open: { animation: 'timing', config: { duration: 500 } },
-					close: { animation: 'timing', config: { duration: 500 } }
+					open: { animation: 'timing', config: { duration: 400 } },
+					close: { animation: 'timing', config: { duration: 400 } }
 				},
 				cardStyleInterpolator: ({ current: { progress } }) => {
 					return {
@@ -45,14 +42,9 @@ const MyStack = () => {
 				component={Detail}
 				sharedElements={(route, otherRoute, showing) => {
 					if (otherRoute.name === 'Edit' && showing) {
-						return [ `item.left.note`, `item.title.note` ]
+						return [ { id: `item.title.note` }, { id: `item.content.note` }, { id: `item.left.note` } ]
 					} else {
-						return [
-							{ id: `item.view.note` },
-							{ id: `item.fab` },
-							{ id: `item.content.note` },
-							{ id: `item.title.note` }
-						]
+						return [ { id: `item.view.note` }, { id: `item.title.note` } ]
 					}
 				}}
 			/>
@@ -60,7 +52,12 @@ const MyStack = () => {
 				name='Edit'
 				component={Edit}
 				sharedElements={(route, otherRoute, showing) => {
-					[ { id: `item.view.note` }, { id: `item.title.note` }, { id: `item.left.note` } ]
+					return [
+						{ id: `item.view.note` },
+						{ id: `item.title.note` },
+						{ id: `item.content.note` },
+						{ id: `item.left.note` }
+					]
 				}}
 			/>
 		</Stack.Navigator>

@@ -4,12 +4,13 @@ import { SharedElement } from 'react-navigation-shared-element'
 import Left from '../../assets/icons/Left'
 import * as Animatable from 'react-native-animatable'
 
-const DURATION = 500
+const DURATION = 350
 const DELAY = 600
 
 const Detail = ({ navigation }) => {
 	const leftRef = React.useRef()
 	const contentRef = React.useRef()
+	const fabRef = React.useRef()
 
 	return (
 		<React.Fragment>
@@ -30,7 +31,12 @@ const Detail = ({ navigation }) => {
 					marginVertical: 16
 				}}
 				hitSlop={{ left: 16, right: 16, top: 16, bottom: 16 }}
-				onPress={() => navigation.goBack()}>
+				onPress={() =>
+					Promise.all([
+						leftRef.current.fadeOut(250),
+						contentRef.current.fadeOut(250),
+						fabRef.current.fadeOutRight(250)
+					]).then(() => navigation.goBack())}>
 				<Animatable.View ref={leftRef} animation='fadeIn' duration={DURATION} delay={DELAY}>
 					<SharedElement id={`item.left.note`}>
 						<Left />
@@ -48,23 +54,26 @@ const Detail = ({ navigation }) => {
 				duration={DURATION}
 				delay={DELAY}
 				style={{ alignItems: 'flex-start', justifyContent: 'flex-start', marginHorizontal: 24 }}>
-				<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-					aliquip ex. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-					mollit anim id est laborum.
-				</Text>
+				<SharedElement id={`item.content.note`}>
+					<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }}>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+						laboris nisi ut aliquip ex. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+						officia deserunt mollit anim id est laborum.
+					</Text>
+				</SharedElement>
 			</Animatable.View>
-			<FAB navigation={navigation} />
+			<FAB ref={fabRef} navigation={navigation} />
 		</React.Fragment>
 	)
 }
 
 export default Detail
 
-const FAB = ({ navigation }) => {
+const FAB = React.forwardRef(({ navigation }, ref) => {
 	return (
 		<Animatable.View
+			ref={ref}
 			animation='fadeInRight'
 			duration={DURATION}
 			delay={DELAY}
@@ -102,4 +111,4 @@ const FAB = ({ navigation }) => {
 			</Pressable>
 		</Animatable.View>
 	)
-}
+})
