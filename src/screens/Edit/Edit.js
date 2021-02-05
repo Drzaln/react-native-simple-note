@@ -1,15 +1,16 @@
 import React from 'react'
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Pressable, StatusBar } from 'react-native'
 import { SharedElement } from 'react-navigation-shared-element'
 import Left from '../../assets/icons/Left'
 import * as Animatable from 'react-native-animatable'
 
-const DURATION = 500
+const DURATION = 350
 const DELAY = 600
 
 const Edit = ({ navigation }) => {
 	return (
 		<React.Fragment>
+			<StatusBar backgroundColor='#F9F9F9' barStyle='dark-content' animated />
 			<Pressable
 				style={{
 					marginHorizontal: 24,
@@ -49,9 +50,19 @@ const Edit = ({ navigation }) => {
 						]}
 					/>
 				</SharedElement>
-				<View style={{ alignItems: 'flex-start', marginHorizontal: 24 , marginVertical: 16}}>
+				<View style={{ alignItems: 'flex-start', marginHorizontal: 24, marginTop: 16 }}>
 					<SharedElement id={`item.title.note`}>
 						<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 34 }}>Title</Text>
+					</SharedElement>
+				</View>
+				<View style={{ alignItems: 'flex-start', marginHorizontal: 24 }}>
+					<SharedElement id={`item.content.note`}>
+						<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }}>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+							labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+							laboris nisi ut aliquip ex. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+							qui officia deserunt mollit anim id est laborum.
+						</Text>
 					</SharedElement>
 				</View>
 			</View>
