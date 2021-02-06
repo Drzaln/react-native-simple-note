@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StatusBar, Pressable, StyleSheet, BackHandler } from 'react-native'
+import { View, Text, StatusBar, Pressable, StyleSheet, BackHandler, TextInput } from 'react-native'
 import { SharedElement } from 'react-navigation-shared-element'
 import Left from '../../assets/icons/Left'
 import * as Animatable from 'react-native-animatable'
@@ -13,7 +13,7 @@ const Detail = ({ navigation }) => {
 
 	const backHandlePress = () => {
 		Promise.all([
-			leftRef.current.fadeOut(250),
+			leftRef.current.fadeOutLeft(250),
 			contentRef.current.fadeOut(250),
 			fabRef.current.fadeOutRight(250)
 		]).then(() => navigation.goBack())
@@ -48,7 +48,7 @@ const Detail = ({ navigation }) => {
 				}}
 				hitSlop={{ left: 16, right: 16, top: 16, bottom: 16 }}
 				onPress={() => backHandlePress()}>
-				<Animatable.View ref={leftRef} animation='fadeIn' duration={DURATION} delay={DELAY}>
+				<Animatable.View ref={leftRef} animation='fadeInLeft' duration={DURATION} delay={DELAY}>
 					<SharedElement id={`item.left.note`}>
 						<Left />
 					</SharedElement>

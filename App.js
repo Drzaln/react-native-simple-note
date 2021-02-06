@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
 import React from 'react'
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
+import Add from './src/screens/Add/Add'
 import Detail from './src/screens/Detail/Detail'
 import Edit from './src/screens/Edit/Edit'
 import Home from './src/screens/Home/Home'
@@ -36,7 +37,15 @@ const MyStack = () => {
 			}}
 			headerMode='none'
 			initialRouteName='Home'>
-			<Stack.Screen name='Home' component={Home} />
+			<Stack.Screen
+				name='Home'
+				component={Home}
+				sharedElements={(route, otherRoute, showing) => {
+					if (otherRoute.name === 'Add' && showing) {
+						return [ { id: `item.fab.note`, animation: 'fade' } ]
+					}
+				}}
+			/>
 			<Stack.Screen
 				name='Detail'
 				component={Detail}
@@ -64,6 +73,13 @@ const MyStack = () => {
 						{ id: `item.left.note` },
 						{ id: `item.fab.note` }
 					]
+				}}
+			/>
+			<Stack.Screen
+				name='Add'
+				component={Add}
+				sharedElements={(route, otherRoute, showing) => {
+					return [ { id: `item.fab.note`, animation: 'fade' } ]
 				}}
 			/>
 		</Stack.Navigator>
