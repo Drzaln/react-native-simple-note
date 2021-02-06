@@ -37,15 +37,7 @@ const MyStack = () => {
 			}}
 			headerMode='none'
 			initialRouteName='Home'>
-			<Stack.Screen
-				name='Home'
-				component={Home}
-				sharedElements={(route, otherRoute, showing) => {
-					if (otherRoute.name === 'Add' && showing) {
-						return [ { id: `item.fab.note`, animation: 'fade' } ]
-					}
-				}}
-			/>
+			<Stack.Screen name='Home' component={Home} />
 			<Stack.Screen
 				name='Detail'
 				component={Detail}
