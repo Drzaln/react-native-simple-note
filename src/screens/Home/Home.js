@@ -15,7 +15,7 @@ const Home = ({ navigation }) => {
 				showsVerticalScrollIndicator={false}>
 				<NoteItem onPress={() => navigation.navigate('Detail')} />
 			</ScrollView>
-			<FAB />
+			<FAB onPress={() => navigation.navigate('Add')} />
 		</React.Fragment>
 	)
 }
@@ -72,9 +72,10 @@ const NoteItem = ({ onPress }) => {
 	)
 }
 
-const FAB = () => {
+const FAB = ({ onPress }) => {
 	return (
-		<View
+		<Pressable
+			onPress={onPress}
 			style={{
 				width: 54,
 				height: 54,
@@ -85,16 +86,18 @@ const FAB = () => {
 				bottom: 50,
 				right: 30
 			}}>
-			<View
-				style={[
-					StyleSheet.absoluteFillObject,
-					{
-						backgroundColor: '#FFA45B',
-						borderRadius: 54 / 2
-					}
-				]}
-			/>
+			<SharedElement id={`item.fab.note`} style={StyleSheet.absoluteFillObject}>
+				<View
+					style={[
+						StyleSheet.absoluteFillObject,
+						{
+							backgroundColor: '#FFA45B',
+							borderRadius: 54 / 2
+						}
+					]}
+				/>
+			</SharedElement>
 			<Plus />
-		</View>
+		</Pressable>
 	)
 }
