@@ -3,6 +3,7 @@ import { View, Text, StatusBar, Pressable, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { SharedElement } from 'react-navigation-shared-element'
 import Plus from '../../assets/icons/Plus'
+import AppleSwipeableRow from '../../components/AppleSwipeableRow/AppleSwipeableRow'
 
 const Home = ({ navigation }) => {
 	return (
@@ -13,7 +14,9 @@ const Home = ({ navigation }) => {
 				overScrollMode='never'
 				contentContainerStyle={{ paddingVertical: 8 }}
 				showsVerticalScrollIndicator={false}>
-				<NoteItem onPress={() => navigation.navigate('Detail')} />
+				<AppleSwipeableRow>
+					<NoteItem onPress={() => navigation.navigate('Detail')} />
+				</AppleSwipeableRow>
 			</ScrollView>
 			<FAB onPress={() => navigation.navigate('Add')} />
 		</React.Fragment>
@@ -34,7 +37,7 @@ const Header = () => {
 
 const NoteItem = ({ onPress }) => {
 	return (
-		<Pressable onPress={onPress}>
+		<Pressable onPress={onPress} rippleColor='transparent'>
 			<View
 				style={{
 					marginHorizontal: 24,
