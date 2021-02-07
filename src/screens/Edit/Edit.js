@@ -63,7 +63,7 @@ const Edit = ({ navigation, route, editNote }) => {
 				</Animatable.Text>
 			</Pressable>
 			<View style={{ flex: 1 }}>
-				<SharedElement id={`item.view.note`} style={StyleSheet.absoluteFillObject}>
+				<SharedElement id={`item.${title}.view`} style={StyleSheet.absoluteFillObject}>
 					<View
 						style={[
 							StyleSheet.absoluteFillObject,

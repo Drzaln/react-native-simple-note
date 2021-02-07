@@ -37,7 +37,16 @@ const MyStack = () => {
 			}}
 			headerMode='none'
 			initialRouteName='Home'>
-			<Stack.Screen name='Home' component={Home} />
+			<Stack.Screen
+				name='Home'
+				component={Home}
+				sharedElements={(route, otherRoute, showing) => {
+					const { title } = route.params
+					if (otherRoute.name === 'Edit' && showing) {
+						return [ { id: `item.${title}.view` }, { id: `item.${title}.title` } ]
+					}
+				}}
+			/>
 			<Stack.Screen
 				name='Detail'
 				component={Detail}
@@ -45,6 +54,7 @@ const MyStack = () => {
 					const { title } = route.params
 					if (otherRoute.name === 'Edit' && showing) {
 						return [
+							{ id: `item.${title}.view` },
 							{ id: `item.${title}.title` },
 							{ id: `item.${title}.content` },
 							{ id: `item.left.note` },
@@ -61,7 +71,7 @@ const MyStack = () => {
 				sharedElements={(route, otherRoute, showing) => {
 					const { title } = route.params
 					return [
-						{ id: `item.view.note` },
+						{ id: `item.${title}.view` },
 						{ id: `item.${title}.title` },
 						{ id: `item.${title}.content` },
 						{ id: `item.left.note` },
