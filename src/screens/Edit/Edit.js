@@ -28,7 +28,7 @@ const Edit = ({ navigation, route, editNote }) => {
 
 	const saveHandlePress = () => {
 		Promise.all([ setEditableText(false), setEditableContent(false), editNote(title, payload) ]).then(() =>
-			navigation.popToTop()
+			navigation.navigate('Detail', { title: newTitle })
 		)
 		return true
 	}
@@ -76,7 +76,7 @@ const Edit = ({ navigation, route, editNote }) => {
 					/>
 				</SharedElement>
 				<View style={{ alignItems: 'flex-start', marginHorizontal: 24, marginTop: 16 }}>
-					{editableTitle ? (
+					{editableTitle && newTitle ? (
 						<TextInput
 							style={{
 								height: Math.max(35, heightTitle),
@@ -89,6 +89,7 @@ const Edit = ({ navigation, route, editNote }) => {
 							value={newTitle}
 							underlineColorAndroid='transparent'
 							textAlign='left'
+							placeholder='Title'
 							multiline
 							autoFocus
 							onContentSizeChange={(event) => {
@@ -106,7 +107,7 @@ const Edit = ({ navigation, route, editNote }) => {
 					)}
 				</View>
 				<View style={{ marginHorizontal: 24, alignItems: 'flex-start' }}>
-					{editableContent ? (
+					{editableContent && newMessage ? (
 						<TextInput
 							style={{
 								height: Math.max(35, heightContent),
@@ -119,6 +120,7 @@ const Edit = ({ navigation, route, editNote }) => {
 							value={newMessage}
 							underlineColorAndroid='transparent'
 							textAlign='left'
+							placeholder='Note'
 							multiline
 							autoFocus
 							onContentSizeChange={(event) => {

@@ -42,7 +42,7 @@ const MyStack = () => {
 				component={Home}
 				sharedElements={(route, otherRoute, showing) => {
 					const { title } = route.params
-					if (otherRoute.name === 'Edit' && showing) {
+					if (otherRoute.name === 'Detail' && showing) {
 						return [ { id: `item.${title}.view` }, { id: `item.${title}.title` } ]
 					}
 				}}

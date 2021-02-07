@@ -22,7 +22,7 @@ const Home = ({ navigation, notes, deleteNote }) => {
 						return (
 							<AppleSwipeableRow key={id} onPress={() => deleteNote(id)}>
 								<NoteItem
-									onPress={() => navigation.navigate('Detail', { title, message })}
+									onPress={() => navigation.navigate('Detail', { title, message, id })}
 									note={note}
 								/>
 							</AppleSwipeableRow>
@@ -37,7 +37,7 @@ const Home = ({ navigation, notes, deleteNote }) => {
 
 const mapStateToProps = (state) => {
 	return {
-		notes: state.note
+		notes: state.note.allNotes
 	}
 }
 

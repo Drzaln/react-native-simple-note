@@ -5,24 +5,27 @@ import Left from '../../assets/icons/Left'
 import * as Animatable from 'react-native-animatable'
 import { useFocusEffect } from '@react-navigation/native'
 import { DELAY, DURATION } from '../../constant/animationTime'
+import { detailNote } from '../../redux/actions'
+import { connect } from 'react-redux'
 
-const Detail = ({ route, navigation }) => {
+const Detail = ({ route, navigation, detailNote, noteDetail }) => {
 	const leftRef = React.useRef()
 	const contentRef = React.useRef()
 	const fabRef = React.useRef()
-	const { title, message } = route.params
+	const { title, message, id } = route.params
 
 	const backHandlePress = () => {
 		Promise.all([
 			leftRef.current.fadeOutLeft(250),
 			contentRef.current.fadeOut(250),
 			fabRef.current.fadeOutRight(250)
-		]).then(() => navigation.goBack())
+		]).then(() => navigation.navigate('Home', { title }))
 		return true
 	}
 
 	useFocusEffect(
 		React.useCallback(() => {
+			detailNote(id)
 			BackHandler.addEventListener('hardwareBackPress', backHandlePress)
 
 			return () => BackHandler.removeEventListener('hardwareBackPress', backHandlePress)
@@ -57,7 +60,9 @@ const Detail = ({ route, navigation }) => {
 			</Pressable>
 			<View style={{ alignItems: 'flex-start', marginHorizontal: 24 }}>
 				<SharedElement id={`item.${title}.title`}>
-					<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 34 }}>{title}</Text>
+					<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 34 }}>
+						{noteDetail ? noteDetail[0].title : ''}
+					</Text>
 				</SharedElement>
 			</View>
 			<Animatable.View
@@ -67,7 +72,9 @@ const Detail = ({ route, navigation }) => {
 				delay={DELAY}
 				style={{ alignItems: 'flex-start', justifyContent: 'flex-start', marginHorizontal: 24 }}>
 				<SharedElement id={`item.${title}.content`}>
-					<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }}>{message}</Text>
+					<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }}>
+						{noteDetail ? noteDetail[0].message : ''}
+					</Text>
 				</SharedElement>
 			</Animatable.View>
 			<FAB ref={fabRef} navigation={navigation} onPress={() => navigation.navigate('Edit', { title, message })} />
@@ -75,7 +82,13 @@ const Detail = ({ route, navigation }) => {
 	)
 }
 
-export default Detail
+const mapStateToProps = (state) => {
+	return {
+		noteDetail: state.note.detailNotes
+	}
+}
+
+export default connect(mapStateToProps, { detailNote })(Detail)
 
 const FAB = React.forwardRef(({ onPress }, ref) => {
 	return (
