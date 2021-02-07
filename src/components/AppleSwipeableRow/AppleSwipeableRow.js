@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, I18nManager } from 'react-native'
+import { StyleSheet, View, I18nManager, Alert } from 'react-native'
 
 import { RectButton, Swipeable } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
@@ -13,7 +13,19 @@ export default class AppleSwipeableRow extends Component {
 		})
 		const pressHandler = () => {
 			this.close()
-			alert(text)
+			Alert.alert(
+				'Delete note',
+				'Are you sure want to delete this note?',
+				[
+					{
+						text: 'Cancel',
+						onPress: () => {},
+						style: 'cancel'
+					},
+					{ text: 'OK', onPress: this.props.onPress }
+				],
+				{ cancelable: false }
+			)
 		}
 		return (
 			<Animated.View
