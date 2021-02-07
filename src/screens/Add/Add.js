@@ -28,14 +28,14 @@ const Add = ({ navigation, addNote }) => {
 		return true
 	}
 
-	const content = {
+	const payload = {
 		id: new Date(),
 		title,
 		message
 	}
 
 	const submitHandlePress = () => {
-		Promise.all([ addNote(content) ]).then(() => navigation.goBack())
+		Promise.all([ addNote(payload) ]).then(() => navigation.goBack())
 		return true
 	}
 

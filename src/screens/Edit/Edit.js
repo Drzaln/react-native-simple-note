@@ -4,16 +4,35 @@ import { SharedElement } from 'react-navigation-shared-element'
 import Left from '../../assets/icons/Left'
 import * as Animatable from 'react-native-animatable'
 import { DELAY, DURATION } from '../../constant/animationTime'
+import { editNote } from '../../redux/actions'
+import { connect } from 'react-redux'
 
-const Edit = ({ navigation }) => {
+const Edit = ({ navigation, route, editNote }) => {
 	const [ editableTitle, setEditableText ] = React.useState(false)
 	const [ editableContent, setEditableContent ] = React.useState(false)
 	const [ heightTitle, setHeightTitle ] = React.useState(69)
 	const [ heightContent, setHeightContent ] = React.useState(69)
-	const [ title, setTitle ] = React.useState('Title')
-	const [ content, setContent ] = React.useState(
-		`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-	)
+	const [ newTitle, setNewTitle ] = React.useState('')
+	const [ newMessage, setNewMessage ] = React.useState('')
+	const { title, message } = route.params
+
+	React.useEffect(() => {
+		setNewTitle(title)
+		setNewMessage(message)
+	}, [])
+
+	const payload = {
+		newTitle,
+		newMessage
+	}
+
+	const saveHandlePress = () => {
+		Promise.all([ setEditableText(false), setEditableContent(false), editNote(title, payload) ]).then(() =>
+			navigation.popToTop()
+		)
+		return true
+	}
+
 	return (
 		<React.Fragment>
 			<StatusBar backgroundColor='#F9F9F9' barStyle='dark-content' animated />
@@ -66,8 +85,8 @@ const Edit = ({ navigation }) => {
 								fontSize: 34,
 								alignItems: 'flex-start'
 							}}
-							onChangeText={(text) => setTitle(text)}
-							value={title}
+							onChangeText={(text) => setNewTitle(text)}
+							value={newTitle}
 							underlineColorAndroid='transparent'
 							textAlign='left'
 							multiline
@@ -77,16 +96,16 @@ const Edit = ({ navigation }) => {
 							}}
 						/>
 					) : (
-						<SharedElement id={`item.title.note`}>
+						<SharedElement id={`item.${title}.title`}>
 							<Text
 								style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 34 }}
 								onPress={() => setEditableText(true)}>
-								{title}
+								{newTitle}
 							</Text>
 						</SharedElement>
 					)}
 				</View>
-				<View style={{ marginHorizontal: 24 }}>
+				<View style={{ marginHorizontal: 24, alignItems: 'flex-start' }}>
 					{editableContent ? (
 						<TextInput
 							style={{
@@ -96,8 +115,8 @@ const Edit = ({ navigation }) => {
 								fontSize: 14,
 								alignItems: 'flex-start'
 							}}
-							onChangeText={(text) => setContent(text)}
-							value={content}
+							onChangeText={(text) => setNewMessage(text)}
+							value={newMessage}
 							underlineColorAndroid='transparent'
 							textAlign='left'
 							multiline
@@ -107,27 +126,22 @@ const Edit = ({ navigation }) => {
 							}}
 						/>
 					) : (
-						<SharedElement id={`item.content.note`}>
+						<SharedElement id={`item.${title}.content`}>
 							<Text
 								style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }}
 								onPress={() => setEditableContent(true)}>
-								{content}
+								{newMessage}
 							</Text>
 						</SharedElement>
 					)}
 				</View>
 			</View>
-			<FAB
-				onPress={() => {
-					setEditableText(false)
-					setEditableContent(false)
-				}}
-			/>
+			<FAB onPress={() => saveHandlePress()} />
 		</React.Fragment>
 	)
 }
 
-export default Edit
+export default connect(null, { editNote })(Edit)
 
 const FAB = ({ onPress }) => {
 	return (

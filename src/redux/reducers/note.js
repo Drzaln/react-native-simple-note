@@ -1,24 +1,20 @@
-import { ADD_NOTE, DELETE_NOTE, EDIT_NOTE, UPDATE } from '../actionTypes'
+import { ADD_NOTE, DELETE_NOTE, EDIT_NOTE } from '../actionTypes'
 
 export default function (state = [], action) {
 	switch (action.type) {
 		case ADD_NOTE: {
-			return state.concat([ action.payload ])
+			return state.concat([ action.payload ]).sort((a, b) => new Date(b.id) - new Date(a.id))
 		}
 		case DELETE_NOTE: {
-			return state.filter((note) => note.content.id !== action.id)
+			return state.filter((note) => note.id !== action.id)
 		}
-		case EDIT_NOTE: {
-			return state.map((note) => (note.id === action.id ? { ...note, editing: !note.editing } : note))
-		}
-		case UPDATE:
+		case EDIT_NOTE:
 			return state.map((note) => {
-				if (note.id === action.id) {
+				if (note.title === action.title) {
 					return {
 						...note,
 						title: action.payload.newTitle,
-						message: action.payload.newMessage,
-						editing: !note.editing
+						message: action.payload.newMessage
 					}
 				} else {
 					return note

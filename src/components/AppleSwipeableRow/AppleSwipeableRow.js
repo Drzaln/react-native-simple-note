@@ -14,12 +14,12 @@ export default class AppleSwipeableRow extends Component {
 		const pressHandler = () => {
 			this.close()
 			Alert.alert(
-				'',
 				'Delete note',
+				'Are you sure want to delete this note?',
 				[
 					{
 						text: 'Cancel',
-						onPress: () => console.log('Cancel Pressed'),
+						onPress: () => {},
 						style: 'cancel'
 					},
 					{ text: 'OK', onPress: this.props.onPress }

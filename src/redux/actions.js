@@ -1,13 +1,17 @@
-import { ADD_NOTE, DELETE_NOTE } from './actionTypes'
+import { ADD_NOTE, DELETE_NOTE, EDIT_NOTE } from './actionTypes'
 
-export const addNote = (content) => ({
+export const addNote = (payload) => ({
 	type: ADD_NOTE,
-	payload: {
-		content
-	}
+	payload
 })
 
 export const deleteNote = (id) => ({
 	type: DELETE_NOTE,
 	id
+})
+
+export const editNote = (title, payload) => ({
+	type: EDIT_NOTE,
+	title,
+	payload
 })

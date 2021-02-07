@@ -8,6 +8,7 @@ import AppleSwipeableRow from '../../components/AppleSwipeableRow/AppleSwipeable
 import { deleteNote } from '../../redux/actions'
 
 const Home = ({ navigation, notes, deleteNote }) => {
+	console.log('notes', notes)
 	return (
 		<React.Fragment>
 			<StatusBar backgroundColor='#F9F9F9' barStyle='dark-content' animated />
@@ -18,10 +19,13 @@ const Home = ({ navigation, notes, deleteNote }) => {
 				showsVerticalScrollIndicator={false}>
 				{notes && notes.length ? (
 					notes.map((note) => {
-						const { id } = note.content
+						const { id, title, message } = note
 						return (
 							<AppleSwipeableRow key={id} onPress={() => deleteNote(id)}>
-								<NoteItem onPress={() => navigation.navigate('Detail')} note={note} />
+								<NoteItem
+									onPress={() => navigation.navigate('Detail', { title, message })}
+									note={note}
+								/>
 							</AppleSwipeableRow>
 						)
 					})
@@ -51,7 +55,7 @@ const Header = () => {
 }
 
 const NoteItem = ({ onPress, note }) => {
-	const { title, message } = note.content
+	const { title, message } = note
 	return (
 		<Pressable onPress={onPress} rippleColor='transparent'>
 			<View
@@ -63,7 +67,7 @@ const NoteItem = ({ onPress, note }) => {
 					justifyContent: 'flex-start',
 					height: 98
 				}}>
-				<SharedElement id={`item.view.note`} style={StyleSheet.absoluteFillObject}>
+				<SharedElement id={`item.view${title}.note`} style={StyleSheet.absoluteFillObject}>
 					<View
 						style={{
 							...StyleSheet.absoluteFillObject,
@@ -74,8 +78,12 @@ const NoteItem = ({ onPress, note }) => {
 					/>
 				</SharedElement>
 				<View style={{ alignItems: 'flex-start' }}>
-					<SharedElement id={`item.title.note`}>
-						<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 18 }}>{title}</Text>
+					<SharedElement id={`item.${title}.title`}>
+						<Text
+							style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 18 }}
+							numberOfLines={1}>
+							{title}
+						</Text>
 					</SharedElement>
 				</View>
 				<View style={{ alignItems: 'flex-start', justifyContent: 'flex-start', marginTop: 4 }}>

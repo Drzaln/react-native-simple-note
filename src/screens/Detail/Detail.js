@@ -1,15 +1,16 @@
 import React from 'react'
-import { View, Text, StatusBar, Pressable, StyleSheet, BackHandler, TextInput } from 'react-native'
+import { View, Text, StatusBar, Pressable, StyleSheet, BackHandler } from 'react-native'
 import { SharedElement } from 'react-navigation-shared-element'
 import Left from '../../assets/icons/Left'
 import * as Animatable from 'react-native-animatable'
 import { useFocusEffect } from '@react-navigation/native'
 import { DELAY, DURATION } from '../../constant/animationTime'
 
-const Detail = ({ navigation }) => {
+const Detail = ({ route, navigation }) => {
 	const leftRef = React.useRef()
 	const contentRef = React.useRef()
 	const fabRef = React.useRef()
+	const { title, message } = route.params
 
 	const backHandlePress = () => {
 		Promise.all([
@@ -55,8 +56,8 @@ const Detail = ({ navigation }) => {
 				</Animatable.View>
 			</Pressable>
 			<View style={{ alignItems: 'flex-start', marginHorizontal: 24 }}>
-				<SharedElement id={`item.title.note`}>
-					<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 34 }}>Title</Text>
+				<SharedElement id={`item.${title}.title`}>
+					<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 34 }}>{title}</Text>
 				</SharedElement>
 			</View>
 			<Animatable.View
@@ -65,16 +66,11 @@ const Detail = ({ navigation }) => {
 				duration={DURATION}
 				delay={DELAY}
 				style={{ alignItems: 'flex-start', justifyContent: 'flex-start', marginHorizontal: 24 }}>
-				<SharedElement id={`item.content.note`}>
-					<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }}>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-						laboris nisi ut aliquip ex. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-						officia deserunt mollit anim id est laborum.
-					</Text>
+				<SharedElement id={`item.${title}.content`}>
+					<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }}>{message}</Text>
 				</SharedElement>
 			</Animatable.View>
-			<FAB ref={fabRef} navigation={navigation} onPress={() => navigation.navigate('Edit')} />
+			<FAB ref={fabRef} navigation={navigation} onPress={() => navigation.navigate('Edit', { title, message })} />
 		</React.Fragment>
 	)
 }
