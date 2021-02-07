@@ -32,7 +32,7 @@ const Detail = ({ route, navigation }) => {
 	return (
 		<React.Fragment>
 			<StatusBar backgroundColor='#FFDA77' barStyle='dark-content' animated />
-			<SharedElement id={`item.view.note`} style={StyleSheet.absoluteFillObject}>
+			<SharedElement id={`item.${title}.view`} style={StyleSheet.absoluteFillObject}>
 				<View
 					style={[
 						StyleSheet.absoluteFillObject,

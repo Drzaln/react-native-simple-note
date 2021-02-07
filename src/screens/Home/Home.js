@@ -8,7 +8,6 @@ import AppleSwipeableRow from '../../components/AppleSwipeableRow/AppleSwipeable
 import { deleteNote } from '../../redux/actions'
 
 const Home = ({ navigation, notes, deleteNote }) => {
-	console.log('notes', notes)
 	return (
 		<React.Fragment>
 			<StatusBar backgroundColor='#F9F9F9' barStyle='dark-content' animated />
@@ -67,7 +66,7 @@ const NoteItem = ({ onPress, note }) => {
 					justifyContent: 'flex-start',
 					height: 98
 				}}>
-				<SharedElement id={`item.view${title}.note`} style={StyleSheet.absoluteFillObject}>
+				<SharedElement id={`item.${title}.view`} style={StyleSheet.absoluteFillObject}>
 					<View
 						style={{
 							...StyleSheet.absoluteFillObject,

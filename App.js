@@ -51,7 +51,7 @@ const MyStack = () => {
 							{ id: `item.fab.note` }
 						]
 					} else {
-						return [ { id: `item.view${title}.note` }, { id: `item.${title}.title` } ]
+						return [ { id: `item.${title}.view` }, { id: `item.${title}.title` } ]
 					}
 				}}
 			/>
