@@ -17,6 +17,7 @@ const Add = ({ navigation, addNote }) => {
 	const titleScreenRef = React.useRef()
 	const contentScreenRef = React.useRef()
 	const fabRef = React.useRef()
+	let id = new Date()
 
 	const backHandlePress = () => {
 		Promise.all([
@@ -29,14 +30,16 @@ const Add = ({ navigation, addNote }) => {
 	}
 
 	const payload = {
-		id: new Date(),
+		id: id.toString(),
 		title,
 		message
 	}
 
 	const submitHandlePress = () => {
-		Promise.all([ addNote(payload) ]).then(() => navigation.goBack())
-		return true
+		if (title && message) {
+			Promise.all([ addNote(payload) ]).then(() => navigation.goBack())
+			return true
+		}
 	}
 
 	useFocusEffect(
@@ -105,7 +108,7 @@ const Add = ({ navigation, addNote }) => {
 						}}
 						onChangeText={(text) => setTitle(text)}
 						value={title}
-						placeholder='Title Note'
+						placeholder='Title'
 						underlineColorAndroid='transparent'
 						textAlign='left'
 						multiline
@@ -132,7 +135,7 @@ const Add = ({ navigation, addNote }) => {
 						value={message}
 						underlineColorAndroid='transparent'
 						textAlign='left'
-						placeholder='Your message'
+						placeholder='Note'
 						multiline
 						onContentSizeChange={(event) => {
 							setHeightContent(event.nativeEvent.contentSize.height)
