@@ -5,12 +5,14 @@ import * as Animatable from 'react-native-animatable'
 import { DELAY, DURATION } from '../../constant/animationTime'
 import { SharedElement } from 'react-navigation-shared-element'
 import { useFocusEffect } from '@react-navigation/native'
+import { connect } from 'react-redux'
+import { addNote } from '../../redux/actions'
 
-const Add = ({ navigation }) => {
+const Add = ({ navigation, addNote }) => {
 	const [ heightTitle, setHeightTitle ] = React.useState(69)
 	const [ heightContent, setHeightContent ] = React.useState(69)
 	const [ title, setTitle ] = React.useState('')
-	const [ content, setContent ] = React.useState('')
+	const [ message, setMessage ] = React.useState('')
 	const leftRef = React.useRef()
 	const titleScreenRef = React.useRef()
 	const contentScreenRef = React.useRef()
@@ -23,6 +25,17 @@ const Add = ({ navigation }) => {
 			contentScreenRef.current.fadeOut(250),
 			fabRef.current.fadeOutRight(250)
 		]).then(() => navigation.goBack())
+		return true
+	}
+
+	const content = {
+		id: new Date(),
+		title,
+		message
+	}
+
+	const submitHandlePress = () => {
+		Promise.all([ addNote(content) ]).then(() => navigation.goBack())
 		return true
 	}
 
@@ -115,11 +128,11 @@ const Add = ({ navigation }) => {
 							fontSize: 14,
 							alignItems: 'flex-start'
 						}}
-						onChangeText={(text) => setContent(text)}
-						value={content}
+						onChangeText={(text) => setMessage(text)}
+						value={message}
 						underlineColorAndroid='transparent'
 						textAlign='left'
-						placeholder='Content Note'
+						placeholder='Your message'
 						multiline
 						onContentSizeChange={(event) => {
 							setHeightContent(event.nativeEvent.contentSize.height)
@@ -127,12 +140,12 @@ const Add = ({ navigation }) => {
 					/>
 				</Animatable.View>
 			</View>
-			<FAB ref={fabRef} onPress={() => {}} />
+			<FAB ref={fabRef} onPress={submitHandlePress} />
 		</React.Fragment>
 	)
 }
 
-export default Add
+export default connect(null, { addNote })(Add)
 
 const FAB = React.forwardRef(({ onPress }, ref) => {
 	return (

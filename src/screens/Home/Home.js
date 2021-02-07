@@ -2,10 +2,12 @@ import React from 'react'
 import { View, Text, StatusBar, Pressable, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { SharedElement } from 'react-navigation-shared-element'
+import { connect } from 'react-redux'
 import Plus from '../../assets/icons/Plus'
 import AppleSwipeableRow from '../../components/AppleSwipeableRow/AppleSwipeableRow'
+import { deleteNote } from '../../redux/actions'
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, notes, deleteNote }) => {
 	return (
 		<React.Fragment>
 			<StatusBar backgroundColor='#F9F9F9' barStyle='dark-content' animated />
@@ -14,16 +16,29 @@ const Home = ({ navigation }) => {
 				overScrollMode='never'
 				contentContainerStyle={{ paddingVertical: 8 }}
 				showsVerticalScrollIndicator={false}>
-				<AppleSwipeableRow>
-					<NoteItem onPress={() => navigation.navigate('Detail')} />
-				</AppleSwipeableRow>
+				{notes && notes.length ? (
+					notes.map((note) => {
+						const { id } = note.content
+						return (
+							<AppleSwipeableRow key={id} onPress={() => deleteNote(id)}>
+								<NoteItem onPress={() => navigation.navigate('Detail')} note={note} />
+							</AppleSwipeableRow>
+						)
+					})
+				) : null}
 			</ScrollView>
 			<FAB onPress={() => navigation.navigate('Add')} />
 		</React.Fragment>
 	)
 }
 
-export default Home
+const mapStateToProps = (state) => {
+	return {
+		notes: state.note
+	}
+}
+
+export default connect(mapStateToProps, { deleteNote })(Home)
 
 const Header = () => {
 	return (
@@ -35,7 +50,8 @@ const Header = () => {
 	)
 }
 
-const NoteItem = ({ onPress }) => {
+const NoteItem = ({ onPress, note }) => {
+	const { title, message } = note.content
 	return (
 		<Pressable onPress={onPress} rippleColor='transparent'>
 			<View
@@ -44,8 +60,8 @@ const NoteItem = ({ onPress }) => {
 					marginVertical: 8,
 					borderRadius: 18,
 					padding: 12,
-					justifyContent: 'center',
-					height: 90
+					justifyContent: 'flex-start',
+					height: 98
 				}}>
 				<SharedElement id={`item.view.note`} style={StyleSheet.absoluteFillObject}>
 					<View
@@ -59,15 +75,12 @@ const NoteItem = ({ onPress }) => {
 				</SharedElement>
 				<View style={{ alignItems: 'flex-start' }}>
 					<SharedElement id={`item.title.note`}>
-						<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 18 }}>Title</Text>
+						<Text style={{ fontFamily: 'Poppins-Medium', color: '#0F1123', fontSize: 18 }}>{title}</Text>
 					</SharedElement>
 				</View>
-				<View style={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+				<View style={{ alignItems: 'flex-start', justifyContent: 'flex-start', marginTop: 4 }}>
 					<Text style={{ fontFamily: 'Poppins-Regular', color: '#434343', fontSize: 14 }} numberOfLines={2}>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-						laboris nisi ut aliquip ex. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-						officia deserunt mollit anim id est laborum.
+						{message}
 					</Text>
 				</View>
 			</View>
