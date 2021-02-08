@@ -1,8 +1,10 @@
 import React from 'react'
 import { View, Text, StatusBar, Pressable, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
+import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions'
 import { SharedElement } from 'react-navigation-shared-element'
 import { connect } from 'react-redux'
+import EmptyNote from '../../assets/icons/EmptyNote'
 import Plus from '../../assets/icons/Plus'
 import AppleSwipeableRow from '../../components/AppleSwipeableRow/AppleSwipeableRow'
 import { deleteNote } from '../../redux/actions'
@@ -12,12 +14,12 @@ const Home = ({ navigation, notes, deleteNote }) => {
 		<React.Fragment>
 			<StatusBar backgroundColor='#F9F9F9' barStyle='dark-content' animated />
 			<Header />
-			<ScrollView
-				overScrollMode='never'
-				contentContainerStyle={{ paddingVertical: 8 }}
-				showsVerticalScrollIndicator={false}>
-				{notes && notes.length ? (
-					notes.map((note) => {
+			{notes && notes.length ? (
+				<ScrollView
+					overScrollMode='never'
+					contentContainerStyle={{ paddingVertical: 8 }}
+					showsVerticalScrollIndicator={false}>
+					{notes.map((note) => {
 						const { id, title, message } = note
 						return (
 							<AppleSwipeableRow key={id} onPress={() => deleteNote(id)}>
@@ -27,9 +29,11 @@ const Home = ({ navigation, notes, deleteNote }) => {
 								/>
 							</AppleSwipeableRow>
 						)
-					})
-				) : null}
-			</ScrollView>
+					})}
+				</ScrollView>
+			) : (
+				<EmptyState />
+			)}
 			<FAB onPress={() => navigation.navigate('Add')} />
 		</React.Fragment>
 	)
@@ -42,6 +46,29 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { deleteNote })(Home)
+
+const EmptyState = () => {
+	const { width } = useWindowDimensions()
+	const iconWidth = Math.floor(width) - 220
+	return (
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+			<View style={{ width: iconWidth, height: iconWidth - 5 }}>
+				<EmptyNote />
+			</View>
+			<Text
+				style={{
+					fontFamily: 'Poppins-Medium',
+					color: '#0F1123',
+					fontSize: 24,
+					opacity: 0.26,
+					marginTop: 32,
+					includeFontPadding: false
+				}}>
+				Empty Note
+			</Text>
+		</View>
+	)
+}
 
 const Header = () => {
 	return (
