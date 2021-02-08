@@ -1,4 +1,4 @@
-package com.simplenote;
+package com.simplenote.drzaln;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
