@@ -21,7 +21,7 @@ function EmptyNote (props) {
 				/>
 				<Path
 					d='M56.08 11.069a3.73 3.73 0 003.735-3.727 3.73 3.73 0 00-3.735-3.726 3.73 3.73 0 00-3.735 3.726 3.73 3.73 0 003.735 3.727z'
-					fill='#fff'
+					fill='#F9F9F9'
 				/>
 				<Path
 					fillRule='evenodd'
@@ -41,7 +41,7 @@ function EmptyNote (props) {
 				/>
 				<Path
 					d='M127.887 34.529a3.588 3.588 0 003.593-3.585 3.588 3.588 0 00-3.593-3.584 3.588 3.588 0 00-3.592 3.585 3.588 3.588 0 003.592 3.584z'
-					fill='#fff'
+					fill='#F9F9F9'
 				/>
 				<Path
 					fillRule='evenodd'
