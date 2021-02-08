@@ -93,54 +93,46 @@ const Add = ({ navigation, addNote }) => {
 						]}
 					/>
 				</SharedElement>
-				<Animatable.View
-					ref={contentScreenRef}
-					animation='fadeIn'
-					duration={DURATION}
-					delay={DELAY}
-					style={{ marginHorizontal: 24, marginTop: 16 }}>
-					<TextInput
-						style={{
-							height: Math.max(35, heightTitle),
-							fontFamily: 'Poppins-Medium',
-							color: '#0F1123',
-							fontSize: 34
-						}}
-						onChangeText={(text) => setTitle(text)}
-						value={title}
-						placeholder='Title'
-						underlineColorAndroid='transparent'
-						textAlign='left'
-						multiline
-						onContentSizeChange={(event) => {
-							setHeightTitle(event.nativeEvent.contentSize.height)
-						}}
-					/>
-				</Animatable.View>
-				<Animatable.View
-					ref={contentScreenRef}
-					animation='fadeIn'
-					duration={DURATION}
-					delay={DELAY}
-					style={{ marginHorizontal: 24 }}>
-					<TextInput
-						style={{
-							height: Math.max(35, heightContent),
-							fontFamily: 'Poppins-Regular',
-							color: '#434343',
-							fontSize: 14,
-							alignItems: 'flex-start'
-						}}
-						onChangeText={(text) => setMessage(text)}
-						value={message}
-						underlineColorAndroid='transparent'
-						textAlign='left'
-						placeholder='Note'
-						multiline
-						onContentSizeChange={(event) => {
-							setHeightContent(event.nativeEvent.contentSize.height)
-						}}
-					/>
+				<Animatable.View ref={contentScreenRef} animation='fadeIn' duration={DURATION} delay={DELAY}>
+					<View style={{ marginHorizontal: 24, marginTop: 16 }}>
+						<TextInput
+							style={{
+								height: Math.max(35, heightTitle),
+								fontFamily: 'Poppins-Medium',
+								color: '#0F1123',
+								fontSize: 34
+							}}
+							onChangeText={(text) => setTitle(text)}
+							value={title}
+							placeholder='Title'
+							underlineColorAndroid='transparent'
+							textAlign='left'
+							multiline
+							onContentSizeChange={(event) => {
+								setHeightTitle(event.nativeEvent.contentSize.height)
+							}}
+						/>
+					</View>
+					<View style={{ marginHorizontal: 24 }}>
+						<TextInput
+							style={{
+								height: Math.max(35, heightContent),
+								fontFamily: 'Poppins-Regular',
+								color: '#434343',
+								fontSize: 14,
+								alignItems: 'flex-start'
+							}}
+							onChangeText={(text) => setMessage(text)}
+							value={message}
+							underlineColorAndroid='transparent'
+							textAlign='left'
+							placeholder='Note'
+							multiline
+							onContentSizeChange={(event) => {
+								setHeightContent(event.nativeEvent.contentSize.height)
+							}}
+						/>
+					</View>
 				</Animatable.View>
 			</View>
 			<FAB ref={fabRef} onPress={submitHandlePress} />
